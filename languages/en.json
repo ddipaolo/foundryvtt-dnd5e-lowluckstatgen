@@ -1,3 +1,13 @@
 {
-    "MODULE.hello": "hello"
+    "LOWLUCKSTATGEN-DND5E": {
+        "settings": {
+            "display-on-titlebar": {
+                "Name": "Display on titlebar of PC sheets?",
+                "Hint": "Enable to put button to launch stat drawing application on the title bar of PC sheets"
+            }
+        },
+        "ui": {
+            "charsheet-titlebar-button": "Open Stat Gen"
+        }
+    }
 }

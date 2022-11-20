@@ -1,34 +1,12 @@
 {
-  "id": "module",
-  "title": "New Module",
-  "description": "",
-  "version": "This is auto replaced",
-  "library": "false",
-  "manifestPlusVersion": "1.2.0",
-  "compatibility": {
-    "minimum": 10,
-    "verified": 10,
-    "maximum": 11
-  },
+  "id": "lowluckstatgen-dnd5e",
+  "title": "Low Luck Stat Generation for D&D 5e",
+  "description": "Stat generation module for D&D 5e as described by Treantmonk here: https://www.youtube.com/watch?v=3SkT1MJ6im8",
+  "author": "ddipaolo",
   "authors": [
     {
-      "name": "The League of Extraordinary FVTT Developers",
-      "url": "https://github.com/League-of-Foundry-Developers",
-      "discord": "discordID#0001"
+      "name": "ddipaolo"
     }
-  ],
-  "relationships": {
-    "systems": [],
-    "requires": []
-  },
-  "esmodules": [
-    "scripts/module.js"
-  ],
-  "scripts": [
-    "scripts/lib/lib.js"
-  ],
-  "styles": [
-    "styles/module.css"
   ],
   "languages": [
     {
@@ -37,15 +15,21 @@
       "path": "languages/en.json"
     }
   ],
-  "url": "This is auto replaced",
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced",
-  "license": "LICENSE",
-  "readme": "README.md",
-  "media": [
-    {
-      "type": "icon",
-      "url": "https://avatars2.githubusercontent.com/u/71292812?s=400&u=ccdb4eeb7abf551ca8f314e5a9bfd0479a4d3d41&v=4"
-    }
-  ]
+  "esmodules": [ "scripts/module.js" ],
+  "styles": [ "styles/module.css" ],
+  "version": "1",
+  "system": ["dnd5e"],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system"
+      }
+    ]
+  },
+  "compatibility": {
+    "minimum": 10,
+    "verified": "10.288",
+    "maximum": 10
+  }
 }
