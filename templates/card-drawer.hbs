@@ -1,14 +1,26 @@
 <div class="body">
     <div class="title">
-        <p class="application-title">Low Luck Stat Generator</p>
-        <p class="video-link-title">(see <a href="">this video</a> for details)</p>
+        <span class="application-title">Low Luck Stat Generator</span>
+        <span class="video-link-title">(see <a href="">this video</a> for details)</span>
     </div>
     <div class="buttons">
-        <p class="deal-piles-button">Deal Card Piles</p>
-        <p class="clear-piles-button">Clear Piles and Shuffle</p>
-        <p class="swap-card-button">Swap a Card From Two Piles</p>
-        <p class="apply-stats-button">Apply Stats</p>
+        <p class="deal-piles-button enabled">Deal Card Piles</p>
+        <p class="clear-piles-button disabled">Clear Piles and Shuffle</p>
+        <p class="swap-card-button disabled">Swap a Card From Two Piles</p>
+        <p class="apply-stats-button disabled">Apply Stats</p>
     </div>
-    {{!-- iterate over card things to display them }}
-    {{ --}}
+    <ul class="pile-list">
+    {{#each piles}}
+        <li class="pile" id="pile-{{@index}}">
+            <div class="card-stack">
+                {{#this}}
+                    <img class="card-image card-stacked-{{@index}}x" src="/modules/lowluckstatgen-dnd5e/images/cards/{{imageName}}"></img>
+                {{/this}}
+            </div>
+            <div class="stat-picker-label">Choose stat:</div>
+            <div class="stat-picker"></div>
+            <div class="total">Total:</div>
+        </li>
+    {{/each}}
+    </ul>
 </div>

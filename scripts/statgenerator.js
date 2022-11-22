@@ -18,10 +18,10 @@ class StatGenerator {
             { value: 3, imageName: 'diamonds_3.png' },
             { value: 3, imageName: 'spades_3.png' },
             { value: 3, imageName: 'hearts_3.png' },
-            { value: 4, imagename: 'clubs_4.png' },
-            { value: 4, imagename: 'diamonds_4.png' },
-            { value: 4, imagename: 'spades_4.png' },
-            { value: 4, imagename: 'hearts_4.png' },
+            { value: 4, imageName: 'clubs_4.png' },
+            { value: 4, imageName: 'diamonds_4.png' },
+            { value: 4, imageName: 'spades_4.png' },
+            { value: 4, imageName: 'hearts_4.png' },
             { value: 5, imageName: 'clubs_5.png' },
             { value: 5, imageName: 'diamonds_5.png' },
             { value: 5, imageName: 'spades_5.png' },
@@ -34,6 +34,10 @@ class StatGenerator {
 
     async initialize() {
         this.initDeck();
+    }
+
+    getPiles() {
+        return this.piles;
     }
     
     drawCardFromDeck() {
@@ -51,6 +55,7 @@ class StatGenerator {
                 pile.push(this.drawCardFromDeck());
             }
             this.piles.push(pile);
+            // console.log(`lowluckstatgen-dnd5e | pile ${pileNum} = [${pile[0].value}, ${pile[1].value}, ${pile[2].value}]`);
         }
     }
 }
@@ -59,6 +64,13 @@ export class StatGeneratorApp extends FormApplication {
     constructor() {
         super();
         this._initialize();
+    }
+    
+    getData() {
+        let data = {};
+        data.piles = this.statGenerator.getPiles();
+
+        return data;
     }
 
     static get defaultOptions() {
