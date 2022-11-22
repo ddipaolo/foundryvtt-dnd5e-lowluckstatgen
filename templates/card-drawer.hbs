@@ -1,25 +1,35 @@
 <div class="body">
     <div class="title">
         <span class="application-title">Low Luck Stat Generator</span>
-        <span class="video-link-title">(see <a href="">this video</a> for details)</span>
+        <span class="video-link-title">(see <a href="https://www.youtube.com/watch?v=3SkT1MJ6im8">this video</a> for details)</span>
     </div>
     <div class="buttons">
         <p class="deal-piles-button enabled">Deal Card Piles</p>
         <p class="clear-piles-button disabled">Clear Piles and Shuffle</p>
         <p class="swap-card-button disabled">Swap a Card From Two Piles</p>
-        <p class="apply-stats-button disabled">Apply Stats</p>
+        <p class="apply-stats-button disabled">Apply Stats and Close</p>
     </div>
     <ul class="pile-list">
     {{#each piles}}
         <li class="pile" id="pile-{{@index}}">
+            <div class="pile-label">Pile #{{@index}}</div>
             <div class="card-stack">
                 {{#this}}
                     <img class="card-image card-stacked-{{@index}}x" src="/modules/lowluckstatgen-dnd5e/images/cards/{{imageName}}"></img>
                 {{/this}}
             </div>
-            <div class="stat-picker-label">Choose stat:</div>
-            <div class="stat-picker"></div>
-            <div class="total">Total:</div>
+            <div class="total">Total: {{sumPile this}}</div>
+            <div class="stat-picker-label">Choose stat:
+                <select id="pile-{{@index}}-stat" class="stat-selector">
+                    <option value="Empty" selected="true">---</option>
+                    <option value="STR">Strength</option>
+                    <option value="DEX">Dexterity</option>
+                    <option value="CON">Constitution</option>
+                    <option value="INT">Intelligence</option>
+                    <option value="WIS">Wisdom</option>
+                    <option value="CHA">Charisma</option>
+                </select>
+            </div>
         </li>
     {{/each}}
     </ul>

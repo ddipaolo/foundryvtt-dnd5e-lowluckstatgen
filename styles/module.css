@@ -1,6 +1,6 @@
 div.body {
-    width: 1050px;
-    height: 750px;
+    width: 900px;
+    height: 600px;
 }
 
 div.title {
@@ -31,8 +31,8 @@ ul.pile-list {
 
 li.pile {
     border: 1px solid black;
-    width: 320px;
-    height: 340px;
+    width: 280px;
+    height: 260px;
     display: inline-block;
     margin: 5px;
     padding: 5px;

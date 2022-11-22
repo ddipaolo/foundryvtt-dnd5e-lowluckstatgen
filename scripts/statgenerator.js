@@ -34,6 +34,7 @@ class StatGenerator {
 
     async initialize() {
         this.initDeck();
+        this.piles = [{}, {}, {}, {}, {}, {}];
     }
 
     getPiles() {
@@ -73,6 +74,25 @@ export class StatGeneratorApp extends FormApplication {
         return data;
     }
 
+    activateListeners(html) {
+        html.find('.deal-piles-button').click( ev => {
+            this.statGenerator.dealCardsIntoPiles();
+            this.render();
+        });
+
+        html.find('.stat-selector').change( ev => this._onStatSelectorChange(ev, html.find('.stat-selector')));
+    }
+
+    _onStatSelectorChange(ev, statSelectors) {
+        let selectorId = ev.target.id;
+        let selectedStat = ev.target.value;
+        for (var i = 0; i < statSelectors.length; i++) {
+            if (statSelectors[i].id !== selectorId && statSelectors[i].value == selectedStat) {
+                statSelectors[i].value = 'Empty';
+            }
+        }
+    }
+
     static get defaultOptions() {
         const defaults = super.defaultOptions;
         const overrides = {
@@ -90,6 +110,14 @@ export class StatGeneratorApp extends FormApplication {
     async _initialize() {
         this.statGenerator = new StatGenerator();
         this.statGenerator.initialize();
-        this.statGenerator.dealCardsIntoPiles();
+        // this.statGenerator.dealCardsIntoPiles();
+
+        Handlebars.registerHelper('sumPile', function (pile) {
+            if (pile instanceof Array) {
+                return pile.reduce((acc, card) => card.value + acc, 0).toString();
+            } else {
+                return "n/a";
+            }
+        });
     }
 }
