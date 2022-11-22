@@ -74,11 +74,19 @@ export class StatGeneratorApp extends FormApplication {
         return data;
     }
 
+    setActor(actorId) {
+        this.actorId = actorId;
+    }
+
     activateListeners(html) {
         html.find('.deal-piles-button').click( ev => {
             this.statGenerator.dealCardsIntoPiles();
+            // html.find('.deal-piles-button')[0].classList.remove('enabled');
+            // html.find('.deal-piles-button')[0].classList.add('disabled');
             this.render();
         });
+
+        html.find('.apply-stats-button').click( ev => this._applyStatsAndClose(html.find('.stat-selector'), html.find('.pile-list')));
 
         html.find('.stat-selector').change( ev => this._onStatSelectorChange(ev, html.find('.stat-selector')));
     }
@@ -91,6 +99,26 @@ export class StatGeneratorApp extends FormApplication {
                 statSelectors[i].value = 'Empty';
             }
         }
+    }
+
+    _applyStatsAndClose(statSelectors, piles) {
+        let accruedStats = {};
+        for (var i=0; i < statSelectors.length; i++) {
+            accruedStats[statSelectors[i].value] = parseInt(piles.find(`#pile-${i}-total`)[0].innerHTML);
+        }
+        if (Object.keys(accruedStats).length === 6) {
+            let actor = game.actors.get(this.actorId);
+            if (actor === null) {
+                ui.notifications.warn('Unable to find appropriate actor');
+            } else {
+                let updateData = {};
+                for (let stat in accruedStats) {
+                    updateData[`system.abilities.${stat}.value`] = accruedStats[stat];
+                }
+                actor.update(updateData);
+            }
+        }
+        this.close();
     }
 
     static get defaultOptions() {

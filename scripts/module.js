@@ -25,6 +25,7 @@ Hooks.on('renderActorSheet', (app, html, data) => {
         let openButton = $(`<a class="open-stat-gen"><i class="fas fa-layer-group"></i> ${buttonText}</a>`);
         openButton.click(async (event) => {
             var statGeneratorApp = new StatGeneratorApp();
+            statGeneratorApp.setActor(data.actor._id);
             statGeneratorApp.render(true);
         });
         html.closest('.app').find('.open-stat-gen').remove();

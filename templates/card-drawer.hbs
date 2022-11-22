@@ -18,16 +18,16 @@
                     <img class="card-image card-stacked-{{@index}}x" src="/modules/lowluckstatgen-dnd5e/images/cards/{{imageName}}"></img>
                 {{/this}}
             </div>
-            <div class="total">Total: {{sumPile this}}</div>
+            <div class="total"><span>Total: </span><span id="pile-{{@index}}-total">{{sumPile this}}</span></div>
             <div class="stat-picker-label">Choose stat:
                 <select id="pile-{{@index}}-stat" class="stat-selector">
                     <option value="Empty" selected="true">---</option>
-                    <option value="STR">Strength</option>
-                    <option value="DEX">Dexterity</option>
-                    <option value="CON">Constitution</option>
-                    <option value="INT">Intelligence</option>
-                    <option value="WIS">Wisdom</option>
-                    <option value="CHA">Charisma</option>
+                    <option value="str">Strength</option>
+                    <option value="dex">Dexterity</option>
+                    <option value="con">Constitution</option>
+                    <option value="int">Intelligence</option>
+                    <option value="wis">Wisdom</option>
+                    <option value="cha">Charisma</option>
                 </select>
             </div>
         </li>
