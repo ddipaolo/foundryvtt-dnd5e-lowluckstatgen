@@ -55,8 +55,7 @@ class StatGenerator {
             for (let cardNum = 1; cardNum <=3; cardNum++) {
                 pile.push(this.drawCardFromDeck());
             }
-            this.piles.push(pile);
-            // console.log(`lowluckstatgen-dnd5e | pile ${pileNum} = [${pile[0].value}, ${pile[1].value}, ${pile[2].value}]`);
+            this.piles[pileNum] = pile;
         }
     }
 }
@@ -104,7 +103,7 @@ export class StatGeneratorApp extends FormApplication {
     _applyStatsAndClose(statSelectors, piles) {
         let accruedStats = {};
         for (var i=0; i < statSelectors.length; i++) {
-            accruedStats[statSelectors[i].value] = parseInt(piles.find(`#pile-${i}-total`)[0].innerHTML);
+            accruedStats[statSelectors[i].value] = parseInt(piles.find(`#pile-${i+1}-total`)[0].innerHTML);
         }
         if (Object.keys(accruedStats).length === 6) {
             let actor = game.actors.get(this.actorId);
