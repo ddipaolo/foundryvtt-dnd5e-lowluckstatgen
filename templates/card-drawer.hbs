@@ -3,35 +3,18 @@
         <span class="application-title">Low Luck Stat Generator</span>
         <span class="video-link-title">(see <a href="https://www.youtube.com/watch?v=3SkT1MJ6im8">this video</a> for details)</span>
     </div>
+    <div class="messages">
+        <p class="instruction-header">Instructions:</p>
+        <p class="instruction-message">{{message}}</p>
+    </div>
     <div class="buttons">
-        <p class="deal-piles-button enabled">Deal Card Piles</p>
-        <p class="clear-piles-button disabled">Clear Piles and Shuffle</p>
-        <p class="swap-card-button disabled">Swap a Card From Two Piles</p>
-        <p class="apply-stats-button disabled">Apply Stats and Close</p>
+        <p class="deal-piles-button {{isEnabled 'deal-piles-button'}}">Deal Card Piles</p>
+        <p class="swap-card-button {{isEnabled 'swap-card-button'}}">Swap a Card From Two Piles</p>
+        <p class="apply-stats-button {{isEnabled 'apply-stats-button'}}">Apply Stats and Close</p>
     </div>
     <ul class="pile-list">
     {{#each piles}}
         {{> pile this }}
-        {{!-- <li class="pile" id="pile-{{@index}}">
-            <div class="pile-label">Pile #{{@index}}</div>
-            <div class="card-stack">
-                {{#this}}
-                    <img class="card-image card-stacked-{{@index}}x" src="/modules/lowluckstatgen-dnd5e/images/cards/{{imageName}}"></img>
-                {{/this}}
-            </div>
-            <div class="total"><span>Total: </span><span id="pile-{{@index}}-total">{{sumPile this}}</span></div>
-            <div class="stat-picker-label">Choose stat:
-                <select id="pile-{{@index}}-stat" class="stat-selector">
-                    <option value="Empty" selected="true">---</option>
-                    <option value="str">Strength</option>
-                    <option value="dex">Dexterity</option>
-                    <option value="con">Constitution</option>
-                    <option value="int">Intelligence</option>
-                    <option value="wis">Wisdom</option>
-                    <option value="cha">Charisma</option>
-                </select>
-            </div>
-        </li> --}}
     {{/each}}
     </ul>
 </div>

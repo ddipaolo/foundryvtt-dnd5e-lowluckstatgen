@@ -7,7 +7,17 @@
             }
         },
         "ui": {
-            "charsheet-titlebar-button": "Open Stat Gen"
+            "charsheet-titlebar-button": "Open Stat Gen",
+            "notifications": {
+                "select-ability-scores-before-applying": "Make selections for all ability scores before applying them."
+            },
+            "messages": {
+                "startup": "First, click the \"Deal Card Piles\" button to deal out six card piles.",
+                "cards-dealt": "Now that you have six piles you can: (1) choose to swap a card from one of the piles with the lowest total to a pile with the highest total, (2) select and apply the ability scores you want and be done, or (3) start over by dealing new piles.",
+                "swap-start": "Click on a card from a highlighted pile that you will swap to your high pile.",
+                "swap-middle": "Now choose which card from your high pile that you wish to be swapped with your selected card.",
+                "swap-complete": "Now make sure you have the ability scores chosen for each pile and click \"Apply Stats and Close\" to save them to your character sheet.  Or you can start over by dealing new piles."
+            }
         }
     }
 }

@@ -2,37 +2,62 @@ div.body {
     width: 900px;
     height: 600px;
 }
-
 div.title {
-    padding: 10px bottom;
+    margin: 0 0 5px 0;
 }
 
 div.title > span {
     font-size: large;
 }
 
+div.messages {
+    border: 1px solid black;
+}
+
+div.messages > p {
+    font-weight: bold;
+}
+
+p.instruction-header {
+    padding: 0 0 0 5px;
+}
+
+div.messages > p.instruction-message {
+    font-weight: normal;
+    margin: 5px;
+}
+
+div.buttons {
+    margin: 10px 0 0 0;
+}
+
 div.buttons > p {
     border: 1px solid black;
     padding: 4px;
     display: inline;
+    background-color: #0a0a0a;
+    font-weight: bold;
 }
 
 div.buttons > p.enabled {
-    color: black;
+    color: white;
 }
 
 div.buttons > p.disabled {
     color: gray;
 }
 
+div.card-stack {
+    margin-top: 20px;
+}
+
 ul.pile-list {
     list-style: none;
+    padding: 0px;
 }
 
 li.pile {
     border: 1px solid black;
-    width: 280px;
-    height: 260px;
     display: inline-block;
     margin: 5px;
     padding: 5px;
@@ -55,4 +80,28 @@ img.card-image {
 
 .card-stacked {
     margin-left: -1rem;
+}
+
+img.card-image-0 {
+    z-index: 0;
+}
+
+img.card-image-1 {
+    z-index: 1;
+}
+
+img.card-image-2 {
+    z-index: 2;
+}
+
+img.selected-card-image {
+    transform: translate(0, -20px);
+}
+
+.low-pile {
+    background-color: #FFCCCC;
+}
+
+.high-pile {
+    background-color: #CCFFCC;
 }

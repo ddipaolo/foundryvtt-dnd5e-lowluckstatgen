@@ -14,4 +14,16 @@ export class Pile {
     get total() {
         return this.cards.reduce((acc, card) => card.value + acc, 0);
     }
+
+    containsCardWithSlug(cardSlug) {
+        return this.cards.some(x => x.cardSlug === cardSlug);
+    }
+
+    removeCardWithSlug(cardSlug) {
+        this.cards = this.cards.filter(x => x.cardSlug !== cardSlug);
+    }
+
+    addCard(card) {
+        this.cards.push(card);
+    }
 }
