@@ -1,6 +1,6 @@
 import { Constants } from './constants.js'
 import { Settings } from './settings.js'
-import { StatGeneratorApp } from './statgenerator.js'
+import { StatGeneratorApp } from './apps/statgeneratorapp.js'
 
 Hooks.once('init', () => {
     Settings.initialize();
