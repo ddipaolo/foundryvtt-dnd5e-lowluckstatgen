@@ -1,6 +1,6 @@
 import { Pile } from "./models/pile.js";
 import { Card, CardSuits } from "./models/card.js";
-import { Constants } from "./constants.js";
+import { Constants, PileFlags } from "./constants.js";
 
 export class StatGenerator {
     constructor() {
@@ -75,6 +75,31 @@ export class StatGenerator {
             }
             this.piles.push(new Pile(pileNum+1, pileCards));
         }
+    }
+
+    activateLowPiles() {
+        this.piles.map(x => {
+            if (x.flags & PileFlags.LowPile) {
+                x.flags = x.flags | PileFlags.ActivePile;
+            } else {
+                x.flags = x.flags &  ~PileFlags.ActivePile;
+            }
+        });
+
+    }
+
+    activateHighPiles() {
+        this.piles.map(x => {
+            if (x.flags & PileFlags.HighPile) {
+                x.flags = x.flags | PileFlags.ActivePile;
+            } else {
+                x.flags = x.flags &  ~PileFlags.ActivePile;
+            }
+        });
+    }
+
+    deactivateAllPiles() {
+        this.piles.map(x => x.flags = x.flags & ~PileFlags.ActivePile);
     }
 
     /**

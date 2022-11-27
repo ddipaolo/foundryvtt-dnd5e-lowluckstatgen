@@ -98,10 +98,7 @@ img.selected-card-image {
     transform: translate(0, -20px);
 }
 
-.low-pile {
+.active-pile {
     background-color: #FFCCCC;
-}
-
-.high-pile {
-    background-color: #CCFFCC;
+    border: 3px solid black;
 }

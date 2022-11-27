@@ -20,4 +20,5 @@ export class PileFlags {
     static None = 0;
     static LowPile = 1;
     static HighPile = 2;
+    static ActivePile = 4;
 }

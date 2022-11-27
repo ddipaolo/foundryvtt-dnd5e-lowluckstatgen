@@ -23,6 +23,7 @@ export class StatGeneratorApp extends FormApplication {
         data.message = this.currentMessage;
         data.piles = this.statGenerator.getPiles();
         data.buttonStates = this.buttonStates;
+        data.state = this.state;
         return data;
     }
 
@@ -54,20 +55,32 @@ export class StatGeneratorApp extends FormApplication {
 
     _handleCardClick(ev, html) {
         if (this.reactToCardClicks) {
-            if (this.state === StatGeneratorStates.SWAPPING_CARDS_START) {  // we haven't picked a second card yet, this is the first
-                ev.currentTarget.classList.add('selected-card-image');
-                this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.swap-middle');
-                this.firstCardToSwap = ev.currentTarget.id;
-                this.state = StatGeneratorStates.SWAPPING_CARDS_MIDDLE;
+            if (this.state === StatGeneratorStates.SWAPPING_CARDS_START) {  // we haven't picked a second card yet, this is the first, the low card
+                // validate it's from a low pile
+                if (ev.currentTarget.closest('.pile').classList.contains('low-pile')) {
+                    ev.currentTarget.classList.add('selected-card-image');
+                    this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.swap-middle');
+                    this.firstCardToSwap = ev.currentTarget.id;
+                    this.statGenerator.activateHighPiles();
+                    this.state = StatGeneratorStates.SWAPPING_CARDS_MIDDLE;
+                    this.render();
+                } else {
+                    ui.notifications.warn(game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.notifications.invalid-first-card'));
+                }
             } else if (this.state === StatGeneratorStates.SWAPPING_CARDS_MIDDLE) {
-                ev.currentTarget.classList.add('selected-card-image');
-                this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.swap-complete');
-                this.statGenerator.swapCards(this.firstCardToSwap, ev.currentTarget.id);
-                this.state = StatGeneratorStates.CARDS_SWAPPED;
-                this.buttonStates['deal-piles-button'] = ButtonFlags.Enabled;
-                this.buttonStates['apply-stats-button'] = ButtonFlags.Enabled;
+                // validate it's from a high pile
+                if (ev.currentTarget.closest('.pile').classList.contains('high-pile')) {
+                    this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.swap-complete');
+                    this.statGenerator.swapCards(this.firstCardToSwap, ev.currentTarget.id);
+                    this.state = StatGeneratorStates.CARDS_SWAPPED;
+                    this.buttonStates['deal-piles-button'] = ButtonFlags.Enabled;
+                    this.buttonStates['apply-stats-button'] = ButtonFlags.Enabled;
+                    this.statGenerator.deactivateAllPiles();
+                    this.render();
+                } else {
+                    ui.notifications.warn(game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.notifications.invalid-second-card'));
+                }
             }
-            this.render();
         }
     }
 
@@ -88,6 +101,7 @@ export class StatGeneratorApp extends FormApplication {
             this.buttonStates['swap-card-button'] = ButtonFlags.Disabled;
             this.buttonStates['apply-stats-button'] = ButtonFlags.Disabled;
             this.reactToCardClicks = true;
+            this.statGenerator.activateLowPiles();
             this.state = StatGeneratorStates.SWAPPING_CARDS_START;
             this.render();
         }
@@ -188,13 +202,17 @@ export class StatGeneratorApp extends FormApplication {
         this.state = StatGeneratorStates.INITIALIZED;
 
         Handlebars.registerHelper('renderFlags', function(pileFlags) {
-            if (pileFlags === PileFlags.HighPile) {
-                return "high-pile";
-            } else if (pileFlags === PileFlags.LowPile) {
-                return "low-pile";
-            } else {
-                return "";
+            let flags = []
+            if (pileFlags & PileFlags.LowPile) {
+                flags.push("low-pile");
             }
+            if (pileFlags & PileFlags.HighPile) {
+                flags.push("high-pile");
+            }
+            if (pileFlags & PileFlags.ActivePile) {
+                flags.push("active-pile");
+            }
+            return flags.join(' ');
         });
 
         Handlebars.registerHelper('isEnabled', function(btnName) {

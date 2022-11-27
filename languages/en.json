@@ -9,7 +9,9 @@
         "ui": {
             "charsheet-titlebar-button": "Open Stat Gen",
             "notifications": {
-                "select-ability-scores-before-applying": "Make selections for all ability scores before applying them."
+                "select-ability-scores-before-applying": "Make selections for all ability scores before applying them.",
+                "invalid-first-card": "You must choose a card that is from one of your piles with the lowest total.",
+                "invalid-second-card": "You must choose a card that is from one of your piles with the highest total."
             },
             "messages": {
                 "startup": "First, click the \"Deal Card Piles\" button to deal out six card piles.",
