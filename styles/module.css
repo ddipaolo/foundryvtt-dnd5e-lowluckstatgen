@@ -82,32 +82,16 @@ img.card-image {
     margin-left: -1rem;
 }
 
-img.card-image-0 {
-    z-index: 0;
-}
-
-img.card-image-1 {
-    z-index: 1;
-}
-
-img.card-image-2 {
-    z-index: 2;
-}
-
-img.selected-card-image {
-    transform: translate(0, -20px);
-}
-
 li.active-pile {
-    background-color: #FFCCCC;
+    background-color: #FFFCCC;
     border: 3px solid black;
 }
 
 div.pile-tag {
     display: inline-block;
     position: relative;
-    top: -18px;
-    left: 145px;
+    top: -22px;
+    left: 146px;
     width: 83px;
     height: 15px;
 }
@@ -118,4 +102,8 @@ div.high-pile {
 
 div.low-pile {
     background: url("../images/highest-lowest-spritesheet.png") 0 -15px;
+}
+
+.pile-label {
+    font-size: large;
 }

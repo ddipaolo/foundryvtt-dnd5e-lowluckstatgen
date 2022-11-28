@@ -1,6 +1,6 @@
-import { Pile } from '../models/pile.js'
 import { StatGenerator } from '../statgenerator.js'
 import { Constants, ButtonFlags, PileFlags } from '../constants.js';
+import { groupBy } from '../utils.js';
 
 const StatGeneratorStates = {
     UNKNOWN: 0,
@@ -141,45 +141,18 @@ export class StatGeneratorApp extends FormApplication {
     }
 
     _tagHighLowPiles() {
-        let highPileNums = [];
-        let lowPileNums = [];
-        let unmarkedPileNums = [];
-        let highTotal = Constants.PILE_TOTAL_MIN;  // lowest possible total
-        let lowTotal = Constants.PILE_TOTAL_MAX;  // highest possible total
+        let pileTotals = groupBy(this.statGenerator.getPiles(), 'total');
+        let highTotal = Math.max(...(Object.keys(pileTotals).map(x => parseInt(x))));
+        let lowTotal = Math.min(...(Object.keys(pileTotals).map(x => parseInt(x))));
         for (var pile of this.statGenerator.getPiles()) {
             let pileTotal = pile.total;
-            let markedPile = false;
-            if (pileTotal > highTotal) {
-                highPileNums = [pile.pileNumber];
-                highTotal = pileTotal;
-                markedPile = true;
-            } else if (pileTotal === highTotal) {
-                highPileNums.push(pile.pileNumber);
-                highTotal = pileTotal;
-                markedPile = true;
-            } 
-            if (pileTotal === lowTotal) {
-                lowPileNums.push(pile.pileNumber);
-                lowTotal = pileTotal;
-                markedPile = true;
-            } else if (pileTotal < lowTotal) {
-                lowPileNums = [pile.pileNumber];
-                lowTotal = pileTotal;
-                markedPile = true;
+            if (pileTotal === highTotal) {
+                this.statGenerator.updatePile(pile.pileNumber, x => x.flags = PileFlags.HighPile);
+            } else if (pileTotal === lowTotal) {
+                this.statGenerator.updatePile(pile.pileNumber, x => x.flags = PileFlags.LowPile);
+            } else {
+                this.statGenerator.updatePile(pile.pileNumber, x => x.flags = PileFlags.None);
             }
-            if (!markedPile) {
-                unmarkedPileNums.push(pile.pileNumber);
-            }
-        }
-        // this technically clears ALL existing flags and should maybe use bitwise AND'ing but it's fine
-        for (var highPileNum of highPileNums) {
-            this.statGenerator.updatePile(highPileNum, x => x.flags = PileFlags.HighPile);
-        }
-        for (var lowPileNum of lowPileNums) {
-            this.statGenerator.updatePile(lowPileNum, x => x.flags = PileFlags.LowPile);
-        }
-        for (var unmarkedPileNum of unmarkedPileNums) {
-            this.statGenerator.updatePile(unmarkedPileNum, x => x.flags = PileFlags.None);
         }
     }
 

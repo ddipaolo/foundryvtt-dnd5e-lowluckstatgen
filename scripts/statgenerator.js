@@ -67,6 +67,7 @@ export class StatGenerator {
     }
 
     dealCardsIntoPiles() {
+        this.initialize();
         this.piles = [];
         for (let pileNum = 0; pileNum < 6; pileNum++) {
             var pileCards = [];
