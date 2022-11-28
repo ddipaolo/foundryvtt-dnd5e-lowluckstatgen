@@ -32,19 +32,19 @@ export class StatGeneratorApp extends FormApplication {
     }
 
     activateListeners(html) {
-        html.find('.deal-piles-button').click( ev => this._dealPilesAndUpdate(html));
+        html.find('.deal-piles-button').click( ev => this._dealPilesAndUpdate());
         html.find('.swap-card-button').click( ev => this._startCardSwap(html));
         html.find('.apply-stats-button').click( ev => this._applyStatsAndClose(html.find('.stat-selector'), html.find('.pile-list')));
 
-        html.find('.card-image').click(ev => this._handleCardClick(ev, html));
+        html.find('.card-image').click(ev => this._handleCardClick(ev));
 
         html.find('.stat-selector').change( ev => this._onStatSelectorChange(ev, html.find('.stat-selector')));
     }
 
-    _dealPilesAndUpdate(html) {
+    _dealPilesAndUpdate() {
         if (this.buttonStates['deal-piles-button'] === ButtonFlags.Enabled) {
             this.statGenerator.dealCardsIntoPiles();
-            this._tagHighLowPiles(html);
+            this._tagHighLowPiles();
             this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.cards-dealt');
             this.buttonStates['swap-card-button'] = ButtonFlags.Enabled;
             this.buttonStates['apply-stats-button'] = ButtonFlags.Enabled;
@@ -53,7 +53,7 @@ export class StatGeneratorApp extends FormApplication {
         }
     }
 
-    _handleCardClick(ev, html) {
+    _handleCardClick(ev) {
         if (this.reactToCardClicks) {
             if (this.state === StatGeneratorStates.SWAPPING_CARDS_START) {  // we haven't picked a second card yet, this is the first, the low card
                 // validate it's from a low pile
@@ -76,6 +76,7 @@ export class StatGeneratorApp extends FormApplication {
                     this.buttonStates['deal-piles-button'] = ButtonFlags.Enabled;
                     this.buttonStates['apply-stats-button'] = ButtonFlags.Enabled;
                     this.statGenerator.deactivateAllPiles();
+                    this._tagHighLowPiles();
                     this.render();
                 } else {
                     ui.notifications.warn(game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.notifications.invalid-second-card'));
@@ -139,33 +140,46 @@ export class StatGeneratorApp extends FormApplication {
         }
     }
 
-    _tagHighLowPiles(html) {
+    _tagHighLowPiles() {
         let highPileNums = [];
         let lowPileNums = [];
+        let unmarkedPileNums = [];
         let highTotal = Constants.PILE_TOTAL_MIN;  // lowest possible total
         let lowTotal = Constants.PILE_TOTAL_MAX;  // highest possible total
         for (var pile of this.statGenerator.getPiles()) {
             let pileTotal = pile.total;
+            let markedPile = false;
             if (pileTotal > highTotal) {
                 highPileNums = [pile.pileNumber];
                 highTotal = pileTotal;
+                markedPile = true;
             } else if (pileTotal === highTotal) {
                 highPileNums.push(pile.pileNumber);
                 highTotal = pileTotal;
+                markedPile = true;
             } 
             if (pileTotal === lowTotal) {
                 lowPileNums.push(pile.pileNumber);
                 lowTotal = pileTotal;
+                markedPile = true;
             } else if (pileTotal < lowTotal) {
                 lowPileNums = [pile.pileNumber];
                 lowTotal = pileTotal;
+                markedPile = true;
+            }
+            if (!markedPile) {
+                unmarkedPileNums.push(pile.pileNumber);
             }
         }
+        // this technically clears ALL existing flags and should maybe use bitwise AND'ing but it's fine
         for (var highPileNum of highPileNums) {
             this.statGenerator.updatePile(highPileNum, x => x.flags = PileFlags.HighPile);
         }
         for (var lowPileNum of lowPileNums) {
             this.statGenerator.updatePile(lowPileNum, x => x.flags = PileFlags.LowPile);
+        }
+        for (var unmarkedPileNum of unmarkedPileNums) {
+            this.statGenerator.updatePile(unmarkedPileNum, x => x.flags = PileFlags.None);
         }
     }
 

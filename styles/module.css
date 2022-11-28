@@ -47,10 +47,6 @@ div.buttons > p.disabled {
     color: gray;
 }
 
-div.card-stack {
-    margin-top: 20px;
-}
-
 ul.pile-list {
     list-style: none;
     padding: 0px;
@@ -61,6 +57,10 @@ li.pile {
     display: inline-block;
     margin: 5px;
     padding: 5px;
+}
+
+div.card-stack {
+    margin-top: -10px;
 }
 
 div.card {
@@ -98,7 +98,24 @@ img.selected-card-image {
     transform: translate(0, -20px);
 }
 
-.active-pile {
+li.active-pile {
     background-color: #FFCCCC;
     border: 3px solid black;
+}
+
+div.pile-tag {
+    display: inline-block;
+    position: relative;
+    top: -18px;
+    left: 145px;
+    width: 83px;
+    height: 15px;
+}
+
+div.high-pile {
+    background: url("../images/highest-lowest-spritesheet.png") 0 0;
+}
+
+div.low-pile {
+    background: url("../images/highest-lowest-spritesheet.png") 0 -15px;
 }

@@ -1,5 +1,6 @@
 <li class="pile {{renderFlags flags}}" id="pile-{{pileNumber}}">
     <div class="pile-label">Pile #{{pileNumber}}</div>
+    <div class="pile-tag {{renderFlags flags}}"></div>
     <div class="card-stack">
         {{#each cards}}
             {{> card this}}
