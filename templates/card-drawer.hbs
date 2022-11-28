@@ -3,10 +3,12 @@
         <span class="application-title">Low Luck Stat Generator</span>
         <span class="video-link-title">(see <a href="https://www.youtube.com/watch?v=3SkT1MJ6im8">this video</a> for details)</span>
     </div>
+    {{#if displayInstructions }}
     <div class="messages">
         <p class="instruction-header">Instructions:</p>
         <p class="instruction-message">{{message}}</p>
     </div>
+    {{/if}}
     <div class="buttons">
         <p class="deal-piles-button {{isEnabled 'deal-piles-button'}}">Deal Card Piles</p>
         <p class="swap-card-button {{isEnabled 'swap-card-button'}}">Swap a Card</p>

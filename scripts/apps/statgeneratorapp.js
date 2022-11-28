@@ -1,5 +1,6 @@
-import { StatGenerator } from '../statgenerator.js'
+import { StatGenerator } from '../statgenerator.js';
 import { Constants, ButtonFlags, PileFlags } from '../constants.js';
+import { Settings } from '../settings.js';
 import { groupBy } from '../utils.js';
 
 const StatGeneratorStates = {
@@ -24,6 +25,7 @@ export class StatGeneratorApp extends FormApplication {
         data.piles = this.statGenerator.getPiles();
         data.buttonStates = this.buttonStates;
         data.state = this.state;
+        data.displayInstructions = this.displayInstructions;
         return data;
     }
 
@@ -178,7 +180,7 @@ export class StatGeneratorApp extends FormApplication {
 
         this.reactToCardClicks = false;
         this.currentMessage = game.i18n.localize('LOWLUCKSTATGEN-DND5E.ui.messages.startup');
-
+        this.displayInstructions = game.settings.get(Constants.MODULE_ID, Settings.SETTINGS.DISPLAY_INSTRUCTIONS_IN_GENERATOR); 
         this.buttonStates = {
             'deal-piles-button': ButtonFlags.Enabled,
             'swap-card-button': ButtonFlags.Disabled,
